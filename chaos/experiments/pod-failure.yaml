@@ -1,0 +1,50 @@
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosExperiment
+metadata:
+  name: pod-failure
+  namespace: chaos-testing
+spec:
+  definition:
+    scope: Namespaced
+    permissions:
+      - apiGroups:
+          - ""
+          - "apps"
+          - "litmuschaos.io"
+        resources:
+          - "deployments"
+          - "replicasets"
+          - "pods"
+          - "jobs"
+        verbs:
+          - "create"
+          - "list"
+          - "get"
+          - "patch"
+          - "update"
+          - "delete"
+          - "deletecollection"
+    image: "litmuschaos/go-runner:latest"
+    args:
+      - -c
+      - ./experiments -name pod-failure
+    command:
+      - /bin/bash
+    env:
+      - name: TOTAL_CHAOS_DURATION
+        value: '60'
+      - name: CHAOS_INTERVAL
+        value: '10'
+      - name: FORCE
+        value: 'true'
+      - name: PODS_AFFECTED_PERC
+        value: '30'
+      - name: LIB
+        value: 'litmus'
+      - name: TARGET_PODS
+        value: ''
+    labels:
+      name: pod-failure
+      app.kubernetes.io/part-of: litmus
+      app.kubernetes.io/component: experiment
+      app.kubernetes.io/version: latest
