@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Variables generales
         APP_NAME = 'jenkins-cloud-native-app'
-        ENVIRONMENT = params.ENVIRONMENT ?: 'dev'
+        ENVIRONMENT = "${params.ENVIRONMENT ?: 'dev'}"
         AWS_REGION = 'us-east-1'
         TF_STATE_BUCKET = 'jenkins-tf-state'
         DOCKER_REGISTRY = '123456789012.dkr.ecr.us-east-1.amazonaws.com'
