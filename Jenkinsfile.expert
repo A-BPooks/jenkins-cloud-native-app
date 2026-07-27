@@ -92,8 +92,8 @@ pipeline {
             }
             agent { label 'docker' }
             environment {
-                TF_VAR_environment = ENVIRONMENT
-                TF_VAR_aws_region = AWS_REGION
+                TF_VAR_environment = "${ENVIRONMENT}"
+                TF_VAR_aws_region = "${AWS_REGION}"
             }
             steps {
                 echo '🏗️ Desplegando infraestructura con Terraform...'
